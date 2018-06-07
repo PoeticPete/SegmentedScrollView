@@ -14,6 +14,7 @@
 		864E3DC320C579640057CE60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 864E3DC120C579640057CE60 /* LaunchScreen.storyboard */; };
 		864E3DCE20C579640057CE60 /* SlidingFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E3DCD20C579640057CE60 /* SlidingFilterTests.swift */; };
 		864E3DD920C579640057CE60 /* SlidingFilterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E3DD820C579640057CE60 /* SlidingFilterUITests.swift */; };
+		8694ECB120C9ABCA004598AD /* SegmentedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694ECB020C9ABC9004598AD /* SegmentedScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		864E3DD420C579640057CE60 /* SlidingFilterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SlidingFilterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		864E3DD820C579640057CE60 /* SlidingFilterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingFilterUITests.swift; sourceTree = "<group>"; };
 		864E3DDA20C579640057CE60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8694ECB020C9ABC9004598AD /* SegmentedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 			children = (
 				864E3DB820C579640057CE60 /* AppDelegate.swift */,
 				864E3DBA20C579640057CE60 /* ViewController.swift */,
+				8694ECB020C9ABC9004598AD /* SegmentedScrollView.swift */,
 				864E3DBC20C579640057CE60 /* Main.storyboard */,
 				864E3DBF20C579640057CE60 /* Assets.xcassets */,
 				864E3DC120C579640057CE60 /* LaunchScreen.storyboard */,
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				864E3DBB20C579640057CE60 /* ViewController.swift in Sources */,
+				8694ECB120C9ABCA004598AD /* SegmentedScrollView.swift in Sources */,
 				864E3DB920C579640057CE60 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
