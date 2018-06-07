@@ -65,6 +65,7 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
         }
         
         slidingFilter.segments = segmentTitles
+        slidingFilter.backgroundColor = UIColor.cyan
     }
     
     
@@ -138,10 +139,8 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
      this function should be called to get the appropriate size for the child.
      */
     static func getSubviewFrame() -> CGRect {
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let slidingFilterHeight = self.slidingFilterHeight
         
-        return CGRect(x: 0, y: statusBarHeight + slidingFilterHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - (statusBarHeight + slidingFilterHeight))
+        return CGRect(x: 0, y: self.slidingFilterHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - self.slidingFilterHeight)
     }
     
     

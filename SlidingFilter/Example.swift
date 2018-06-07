@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         let purple = UIView(frame: SegmentedScrollView.getSubviewFrame())
         purple.backgroundColor = UIColor.purple
         
+        
         let x = SegmentedScrollView(frame: CGRect(x:0, y:20, width:self.view.frame.width, height: self.view.frame.height), segmentTitles: ["Blue", "Red", "Green", "Purple"], views: [blue, red, green, purple])
         
         self.view.addSubview(x)
