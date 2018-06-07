@@ -65,7 +65,6 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
         }
         
         slidingFilter.segments = segmentTitles
-        slidingFilter.backgroundColor = UIColor.cyan
     }
     
     
