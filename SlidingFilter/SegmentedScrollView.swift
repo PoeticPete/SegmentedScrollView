@@ -13,17 +13,14 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
     
     
     // MARK: - Variables
-    /// The array of views this SegmentedScrollView contains each view must be the width of the screen.
-    var views:[UIView] = []
+    /// The array of views this SegmentedScrollView contains and corresponding titles.
+    var segmentViews:[(UIView, String)] = []
     
     /// The sliding filter view that displays the filters.
     var slidingFilter: SlidingFilter!
-    
-    /// The titles of each filter. Displayed on each filter button.
-    var segmentTitles:[String] = []
-    
+
     /// The height of the sliding filter. Default 40 pixels.
-    static var slidingFilterHeight:CGFloat = 40
+    var slidingFilterHeight:CGFloat = 40
     
     /// The scrollview used to display the multiple views.
     var scrollView: UIScrollView!
@@ -41,30 +38,29 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
      - Parameter views: The views to be added to the scroll view. Each view will fall under a segment title.
      
      */
-    init(frame: CGRect, segmentTitles: [String], views:[UIView]) {
+    init(frame: CGRect, segmentViews: [(UIView, String)]) {
         super.init(frame: frame)
-        slidingFilter = SlidingFilter(frame: CGRect(x: 0, y: 0, width: frame.width, height: SegmentedScrollView.slidingFilterHeight))
+        slidingFilter = SlidingFilter(frame: CGRect(x: 0, y: 0, width: frame.width, height: self.slidingFilterHeight))
         slidingFilter.delegate = self
         
         self.addSubview(slidingFilter)
         
-        self.segmentTitles = segmentTitles
-        self.views = views
+        self.segmentViews = segmentViews
         
-        scrollView = UIScrollView(frame: SegmentedScrollView.getSubviewFrame())
+        scrollView = UIScrollView(frame: self.getSubviewFrame())
         self.addSubview(scrollView)
-        scrollView.contentSize = CGSize(width: SegmentedScrollView.getSubviewFrame().width * CGFloat(views.count), height: SegmentedScrollView.getSubviewFrame().height)
+        scrollView.contentSize = CGSize(width: self.getSubviewFrame().width * CGFloat(segmentViews.count), height: self.getSubviewFrame().height)
         scrollView.delegate = self
         scrollView.isPagingEnabled = true
-        for i in 0..<views.count {
-            let firstFrame = SegmentedScrollView.getSubviewFrame()
+        for i in 0..<segmentViews.count {
+            let firstFrame = self.getSubviewFrame()
             
             // adjust to ith frame
-            views[i].frame = CGRect(x: firstFrame.width * CGFloat(i), y: 0, width: firstFrame.width, height: firstFrame.height)
-            scrollView.addSubview(views[i])
+            segmentViews[i].0.frame = CGRect(x: firstFrame.width * CGFloat(i), y: 0, width: firstFrame.width, height: firstFrame.height)
+            scrollView.addSubview(segmentViews[i].0)
         }
         
-        slidingFilter.segments = segmentTitles
+        slidingFilter.segments = segmentViews.map{$0.1}
     }
     
     
@@ -78,7 +74,7 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
         
         if shouldManageSelection {
             let currSelectedIndex = self.slidingFilter.selected
-            let viewWidth = SegmentedScrollView.getSubviewFrame().width
+            let viewWidth = self.getSubviewFrame().width
             
             let lower = CGFloat(currSelectedIndex) * viewWidth - 0.5 * viewWidth
             let upper = CGFloat(currSelectedIndex) * viewWidth + 0.5 * viewWidth
@@ -94,7 +90,7 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
         
         
         // update the bottom line
-        slidingFilter.bottomLine.frame = CGRect(x: scrollView.contentOffset.x/CGFloat(views.count), y:slidingFilter.bottomLine.frame.minY, width: slidingFilter.bottomLine.frame.width, height: slidingFilter.bottomLine.frame.height)
+        slidingFilter.bottomLine.frame = CGRect(x: scrollView.contentOffset.x/CGFloat(segmentViews.count), y:slidingFilter.bottomLine.frame.minY, width: slidingFilter.bottomLine.frame.width, height: slidingFilter.bottomLine.frame.height)
         
     }
     
@@ -119,7 +115,7 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
     func segmentTapped(index: Int) {
         shouldManageSelection = false
         slidingFilter.setSelection(tag: index)
-        scrollView.setContentOffset(CGPoint(x: CGFloat(index) * SegmentedScrollView.getSubviewFrame().width, y: 0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: CGFloat(index) * self.getSubviewFrame().width, y: 0), animated: true)
     }
     
     /**
@@ -137,9 +133,10 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
      Gets the frame of a child view. When adding a view to the SegmentedScrollView,
      this function should be called to get the appropriate size for the child.
      */
-    static func getSubviewFrame() -> CGRect {
+    func getSubviewFrame() -> CGRect {
         
-        return CGRect(x: 0, y: self.slidingFilterHeight, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - self.slidingFilterHeight)
+        let h = self.frame.height - self.slidingFilterHeight
+        return CGRect(x: 0, y: self.slidingFilterHeight, width: self.frame.width, height: h)
     }
     
     
