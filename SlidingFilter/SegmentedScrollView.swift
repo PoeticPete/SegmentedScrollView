@@ -25,9 +25,13 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
     /// The scrollview used to display the multiple views.
     var scrollView: UIScrollView!
     
+    var delegate: SegmentedScrollViewDelegate?
+    
     /// The SegmentedScrollView manages the selected filter when the user drags the scroll view.
     /// The Sliding Filter manages the selected filter when the user taps on a filter button.
     private var shouldManageSelection = true
+    
+    
     
     // MARK: - Initializer
     /**
@@ -81,10 +85,12 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
             
             if scrollView.contentOffset.x > upper {
                 slidingFilter.setSelection(tag: currSelectedIndex + 1)
+                delegate?.segmentChanged(to: slidingFilter.selected)
             }
             
             if scrollView.contentOffset.x < lower {
                 slidingFilter.setSelection(tag: currSelectedIndex - 1)
+                delegate?.segmentChanged(to: slidingFilter.selected)
             }
         }
         
@@ -116,6 +122,7 @@ class SegmentedScrollView: UIView, UIScrollViewDelegate, SlidingFilterDelegate {
         shouldManageSelection = false
         slidingFilter.setSelection(tag: index)
         scrollView.setContentOffset(CGPoint(x: CGFloat(index) * self.getSubviewFrame().width, y: 0), animated: true)
+        delegate?.segmentChanged(to: slidingFilter.selected)
     }
     
     /**
@@ -236,4 +243,8 @@ class SlidingFilter: UIView {
 /// The delegate object used to connect the SegmentedScrollView with the SlidingFilter.
 protocol SlidingFilterDelegate {
     func segmentTapped(index: Int)
+}
+
+protocol SegmentedScrollViewDelegate {
+    func segmentChanged(to: Int)
 }
